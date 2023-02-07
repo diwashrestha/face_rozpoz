@@ -58,6 +58,7 @@ app.layout = html.Div(
             ],
             className="content",
         ),
+
     ]
 )
 

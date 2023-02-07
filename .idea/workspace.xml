@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc31c1ea-141a-4241-ae49-feac5006c7ff" name="Changes" comment="Created dashboard with the foldable sidebar.">
-      <change beforePath="$PROJECT_DIR$/_cam.py" beforeDir="false" afterPath="$PROJECT_DIR$/_cam.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +32,19 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="ver_0" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
         <option value="Diwash Shrestha &lt;diwash712@gmail.com&gt;" />
@@ -45,10 +59,13 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="ver_0" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/app.py" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -101,7 +118,9 @@
       <workItem from="1675758229577" duration="350000" />
       <workItem from="1675758589183" duration="2054000" />
       <workItem from="1675760655164" duration="203000" />
-      <workItem from="1675760866528" duration="13167000" />
+      <workItem from="1675760866528" duration="13504000" />
+      <workItem from="1675776981154" duration="108000" />
+      <workItem from="1675777096893" duration="304000" />
     </task>
     <task id="LOCAL-00001" summary="Created dashboard with the foldable sidebar.">
       <created>1675776342240</created>
