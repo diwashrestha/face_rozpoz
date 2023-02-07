@@ -1,0 +1,40 @@
+Index: _cam.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import dash\nimport dash_core_components as dcc\nimport dash_html_components as html\n\nfrom flask import Flask, Response\nimport cv2\n\nclass VideoCamera(object):\n    def __init__(self):\n        self.video = cv2.VideoCapture(0)\n\n    def __del__(self):\n        self.video.release()\n\n    def get_frame(self):\n        success, image = self.video.read()\n        ret, jpeg = cv2.imencode('.jpg', image)\n        return jpeg.tobytes()\n\n\ndef gen(camera):\n    while True:\n        frame = camera.get_frame()\n        yield (b'--frame\\r\\n'\n               b'Content-Type: image/jpeg\\r\\n\\r\\n' + frame + b'\\r\\n\\r\\n')\n\nserver = Flask(__name__)\napp = dash.Dash(__name__, server=server)\n\n@server.route('/video_feed')\ndef video_feed():\n    return Response(gen(VideoCamera()),\n                    mimetype='multipart/x-mixed-replace; boundary=frame')\n\napp.layout = html.Div([\n    html.H1(\"Webcam Test\"),\n    html.Img(src=\"/video_feed\")\n])\n\nif __name__ == '__main__':\n    app.run_server(debug=True)
+===================================================================
+diff --git a/_cam.py b/_cam.py
+--- a/_cam.py	
++++ b/_cam.py	
+@@ -5,6 +5,7 @@
+ from flask import Flask, Response
+ import cv2
+ 
++
+ class VideoCamera(object):
+     def __init__(self):
+         self.video = cv2.VideoCapture(0)
+@@ -24,18 +25,21 @@
+         yield (b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+ 
++
+ server = Flask(__name__)
+ app = dash.Dash(__name__, server=server)
+ 
++
+ @server.route('/video_feed')
+ def video_feed():
+     return Response(gen(VideoCamera()),
+                     mimetype='multipart/x-mixed-replace; boundary=frame')
+ 
++
+ app.layout = html.Div([
+     html.H1("Webcam Test"),
+     html.Img(src="/video_feed")
+ ])
+ 
+ if __name__ == '__main__':
+-    app.run_server(debug=True)
+\ No newline at end of file
++    app.run_server(debug=True)
