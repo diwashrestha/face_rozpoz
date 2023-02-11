@@ -16,6 +16,10 @@
   width: 16rem;
 }
 
+.ms-auto{
+margin-right: 93%;
+}
+
 /* make sure the contents of the navlink don't wrap when navbar collapses */
 .sidebar .nav-link {
   width: 100%;
