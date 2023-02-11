@@ -68,13 +68,6 @@ CONTENT_STYLE1 = {
 
 sidebar = html.Div(
     [
-        html.Div(
-            [
-                html.H2("Face-RozPoz", style={"color": "white"}),
-            ],
-            className="sidebar-header",
-        ),
-        html.Hr(),
         dbc.Nav(
             [
                 dbc.NavLink(
