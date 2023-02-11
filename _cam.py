@@ -1,51 +1,41 @@
-import asyncio
-import base64
-import dash, cv2
+import dash
+import dash_core_components as dcc
 import dash_html_components as html
-import threading
 
-from dash.dependencies import Output, Input
-from quart import Quart, websocket
-from dash_extensions import WebSocket
-
+from flask import Flask, Response
+import cv2
 
 class VideoCamera(object):
-    def __init__(self, video_path):
-        self.video = cv2.VideoCapture(video_path)
+    def __init__(self):
+        self.video = cv2.VideoCapture(0)
 
     def __del__(self):
         self.video.release()
 
     def get_frame(self):
         success, image = self.video.read()
-        _, jpeg = cv2.imencode('.jpg', image)
+        ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
 
-# Setup small Quart server for streaming via websocket.
-server = Quart(__name__)
-delay_between_frames = 0.05  # add delay (in seconds) if CPU usage is too high
-
-
-@server.websocket("/stream")
-async def stream():
-    camera = VideoCamera(0)  # zero means webcam
+def gen(camera):
     while True:
-        if delay_between_frames is not None:
-            await asyncio.sleep(delay_between_frames)  # add delay if CPU usage is too high
         frame = camera.get_frame()
-        await websocket.send(f"data:image/jpeg;base64, {base64.b64encode(frame).decode()}")
+        yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+server = Flask(__name__)
+app = dash.Dash(__name__, server=server)
 
-# Create small Dash application for UI.
-app = dash.Dash(__name__)
+@server.route('/video_feed')
+def video_feed():
+    return Response(gen(VideoCamera()),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
 app.layout = html.Div([
-    html.Img(style={'width': '40%', 'padding': 10}, id="video"),
-    WebSocket(url=f"ws://127.0.0.1:5000/stream", id="ws")
+    html.H1("Webcam Test"),
+    html.Img(src="/video_feed")
 ])
-# Copy data from websocket to Img element.
-app.clientside_callback("function(m){return m? m.data : '';}", Output(f"video", "src"), Input(f"ws", "message"))
 
 if __name__ == '__main__':
-    threading.Thread(target=app.run_server).start()
-    server.run()
+    app.run_server(debug=True)

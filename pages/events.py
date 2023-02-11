@@ -5,13 +5,13 @@ dash.register_page(__name__)
 
 layout = html.Div(children=[
     html.H1(children='This is our Events page'),
-    html.Div([
+	html.Div([
         "Select a city: ",
-        dcc.RadioItems(['New York City', 'Montreal', 'San Francisco'],
-                       'Montreal',
-                       id='analytics-input')
+        dcc.RadioItems(['New York City', 'Montreal','San Francisco'],
+        'Montreal',
+        id='analytics-input')
     ]),
-    html.Br(),
+	html.Br(),
     html.Div(id='analytics-output'),
 ])
 

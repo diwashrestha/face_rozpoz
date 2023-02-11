@@ -1,7 +1,6 @@
 import dash
+from dash import dcc, html
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
 from dash.dependencies import Input, Output, State
 
 app = dash.Dash(
@@ -69,6 +68,13 @@ CONTENT_STYLE1 = {
 
 sidebar = html.Div(
     [
+        html.Div(
+            [
+                html.H2("Face-RozPoz", style={"color": "white"}),
+            ],
+            className="sidebar-header",
+        ),
+        html.Hr(),
         dbc.Nav(
             [
                 dbc.NavLink(
