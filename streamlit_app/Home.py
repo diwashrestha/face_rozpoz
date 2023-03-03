@@ -6,6 +6,7 @@ import pickle
 import cv2 as cv
 import streamlit as st
 
+#from Home import VideoCamera
 from src.main_function import (encode_generator, face_detect, face_encoding_test, face_identify, face_loc_test,
                                face_mark)
 
@@ -43,24 +44,60 @@ else:
     encoding_file.close()
     known_face_encodings, known_face_names = known_face_encode_name_list
 
+## Create class for the videocapture
+class VideoCamera:
+    def __init__(self, cam_path):
+        self.video = cv.VideoCapture(cam_path)
+
+    def __del__(self):
+        self.video.release()
+
+    def get_frame(self):
+        while True:
+            success, image = self.video.read()
+
+            # Recolor image to RGB
+            image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+
+            _, jpeg = cv.imencode('.jpg', image)
+            return jpeg.tobytes()
+
 
 
 
 st.set_page_config(page_title="Video Dashboard", page_icon="📈",layout="wide")
 st.title('Video Dashboard')
+col1, col2 = st.columns(2)
 
-#run = st.checkbox('Video')
-FRAME_WINDOW = st.image([])
+with col1:
+   st.header("Camera 1")
+   FRAME_WINDOW1 = st.image([])
 
-# admin
-# pw
-# video_capture = cv2.VideoCapture('rtsp://192.168.1.110/554')
+with col2:
+   st.header("Camera 2")
+   FRAME_WINDOW2 = st.image([])
+
+
+col1, col2 = st.columns(2)
+
+with col1:
+   st.header("Camera 3")
+   FRAME_WINDOW3 = st.image([])
+
+with col2:
+   st.header("Camera 4")
+   FRAME_WINDOW4 = st.image([])
+
+
+
+
+
 video_capture = cv.VideoCapture(0)
 frame_width = int(video_capture.get(cv.CAP_PROP_FRAME_WIDTH))
 frame_height = int(video_capture.get(cv.CAP_PROP_FRAME_HEIGHT))
 detector.setInputSize([frame_width, frame_height])
-camera = True
-while camera:
+
+while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
@@ -88,7 +125,11 @@ while camera:
             new_frame = face_mark(frame, face, name)
 
     rgb_frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-    FRAME_WINDOW.image(rgb_frame)
+    FRAME_WINDOW1.image(rgb_frame)
+    FRAME_WINDOW2.image(rgb_frame)
+    FRAME_WINDOW3.image(rgb_frame)
+    FRAME_WINDOW4.image(rgb_frame)
+
 else:
 
     # conn.close()
