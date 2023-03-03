@@ -122,7 +122,7 @@ while True:
             face_feature = face_encoding_test(face_align)
             print("Face Feature: {}".format(face_feature))
             name = face_identify(frame_face_feature=face_feature, known_face_encodings=known_face_encodings, known_face_names=known_face_names)
-            new_frame = face_mark(frame, face, name)
+            face_mark(frame, face, name)
 
     rgb_frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
     FRAME_WINDOW1.image(rgb_frame)
